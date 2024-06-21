@@ -1,15 +1,15 @@
-package com.busanit.community
+package com.busanit.community.activity
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.busanit.community.databinding.ActivityMainBinding
-import com.busanit.community.databinding.FragmentCommonBinding
+import com.busanit.community.fragment.CheeringFragment
+import com.busanit.community.fragment.CommonFragment
+import com.busanit.community.fragment.MentalFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +21,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 글쓰기 화면으로 넘어가기
+        val intent = Intent(this, WriteActivity::class.java)
+        binding.writeButton.setOnClickListener { startActivity(intent) }
+
+
 
         // 사용할 프래그먼트
         fragmentList.add(CommonFragment())
@@ -38,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             }.attach()
         }
 
-
     }
 
     class TabAdapter(fragmentActivity: FragmentActivity, val fragmentList: MutableList<Fragment>) : FragmentStateAdapter(fragmentActivity) {
@@ -48,4 +53,5 @@ class MainActivity : AppCompatActivity() {
             return fragmentList[position]
         }
     }
+
 }

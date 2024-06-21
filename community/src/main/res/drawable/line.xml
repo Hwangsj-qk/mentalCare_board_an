@@ -4,7 +4,7 @@
 
     <!--    선 만들기 -->
     <stroke
-        android:color="@color/black"
-        android:width="3dp" />
+        android:color="#dcdcdc"
+        android:width="1dp" />
 
 </shape>

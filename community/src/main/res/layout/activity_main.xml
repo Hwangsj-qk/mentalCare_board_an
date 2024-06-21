@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".activity.MainActivity"
     android:orientation="vertical"
     android:padding="14dp">
 
@@ -27,9 +27,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        />
+
+    <Button
+        android:id="@+id/writeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="글쓰기"
+        android:layout_gravity="end" />
+
+
 
 </LinearLayout>
