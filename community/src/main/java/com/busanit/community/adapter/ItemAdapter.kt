@@ -30,6 +30,20 @@ class ItemAdapter(var boards: List<Board>,
             binding.heartCount.text = board.boardLikeCount.toString()
             binding.commentCount.text = board.boardCommentCount.toString()
 
+            binding.root.setOnClickListener {
+                val context = it.context
+                val intent = Intent(context, BoardDetailActivity::class.java)
+                intent.putExtra("boardId", board.boardId)
+                intent.putExtra("boardTitle", board.boardTitle)
+                intent.putExtra("boardContent", board.boardContent)
+                intent.putExtra("userNickname", board.userNickname)
+                intent.putExtra("heartCount", board.boardLikeCount)
+                intent.putExtra("commentCount", board.boardCommentCount)
+                intent.putExtra("boardTag", board.boardTag)
+                intent.putExtra("boardTime", board.calculateTime)
+                context.startActivity(intent)
+            }
+
         }
     }
 
@@ -44,11 +58,13 @@ class ItemAdapter(var boards: List<Board>,
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(boards[position])
 
-        // BoardDetailActivity로 이동
-        holder.itemView.setOnClickListener{
-            val intent = Intent(holder.itemView?.context, BoardDetailActivity::class.java)
-            ContextCompat.startActivity(holder.itemView.context, intent, null)
-        }
+//        // BoardDetailActivity로 이동
+//        holder.itemView.setOnClickListener{
+//            val intent = Intent(holder.itemView?.context, BoardDetailActivity::class.java)
+//            val board = boards[position]
+//            intent.putExtra("board", board)
+//            ContextCompat.startActivity(holder.itemView.context, intent, null)
+//        }
 
 
     }
