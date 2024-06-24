@@ -39,8 +39,6 @@ class CommonFragment : Fragment() {
     }
 
 
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,12 +50,6 @@ class CommonFragment : Fragment() {
 
         getBoards()
 
-        //binding.recyclerView.setOnClickListener {
-            //activity?.let {
-                //val intent = Intent(context, BoardDetailActivity::class.java)
-                //startActivity(intent)
-            //}
-        //}
     }
 
     // 게시글 목록 가져오기

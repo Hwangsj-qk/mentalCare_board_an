@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.busanit.community.activity.BoardDetailActivity
@@ -42,6 +43,12 @@ class ItemAdapter(var boards: List<Board>,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(boards[position])
+
+        // BoardDetailActivity로 이동
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView?.context, BoardDetailActivity::class.java)
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
+        }
 
 
     }
