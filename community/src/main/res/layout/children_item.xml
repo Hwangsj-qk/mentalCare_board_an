@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24sp"
+    android:background="#dcdcdc"
+    >
+
+
+        <TextView
+            android:id="@+id/commentUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="글쓴이"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            />
+
+
+    <TextView
+        android:id="@+id/commentContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="댓글을 적는 댓글댓글 댓글"
+        android:paddingTop="8dp"
+        />
+
+
+    <TextView
+        android:id="@+id/commentTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="댓글을 적은 날짜"
+        android:textSize="12sp"
+        android:paddingTop="10dp"/>
+
+</LinearLayout>

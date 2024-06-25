@@ -21,6 +21,7 @@
             />
 
         <ImageView
+            android:id="@+id/childrenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/mode_comment_24px"
@@ -44,7 +45,8 @@
             android:layout_height="wrap_content"
             android:text="댓글을 적은 날짜"
             android:textSize="12sp"
-            android:paddingTop="10dp"/>
+            android:paddingTop="10dp"
+            android:paddingBottom="10sp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

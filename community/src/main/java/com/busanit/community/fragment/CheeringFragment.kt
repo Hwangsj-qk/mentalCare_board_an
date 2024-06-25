@@ -40,7 +40,6 @@ class CheeringFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = itemAdapter
 
-
         getBoards()
     }
 

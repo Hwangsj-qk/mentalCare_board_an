@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             }.attach()
         }
 
+
     }
 
     class TabAdapter(fragmentActivity: FragmentActivity, val fragmentList: MutableList<Fragment>) : FragmentStateAdapter(fragmentActivity) {

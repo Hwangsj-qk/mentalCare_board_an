@@ -4,4 +4,9 @@ data class Comment (val boardId : Long,
                     val commentContent: String,
                     val commentTime: String,
                     val userNickname : String,
-                    val commentId : Long)
+                    val commentId : Long,
+                    val childrenComments: List<ChildrenComment>)
+
+data class CommentResponse(
+    val count : Int
+)

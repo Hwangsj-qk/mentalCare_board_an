@@ -25,6 +25,7 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/completeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="완료"
@@ -33,16 +34,18 @@
     </FrameLayout>
 
     <EditText
+        android:id="@+id/editTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:hint="제목"
         android:inputType="text" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/tagGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/commonButton"
@@ -65,9 +68,10 @@
             android:layout_weight="1"
             android:text="응원" />
 
-    </LinearLayout>
+    </RadioGroup>
 
     <EditText
+        android:id="@+id/editContent"
         android:layout_width="match_parent"
         android:layout_height="350sp"
         android:hint="내용을 입력하세요"

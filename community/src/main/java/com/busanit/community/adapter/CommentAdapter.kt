@@ -1,33 +1,37 @@
 package com.busanit.community.adapter
 
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.makeText
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.busanit.community.activity.BoardDetailActivity
+import com.busanit.community.RetrofitClient
+import com.busanit.community.databinding.ActivityBoardDetailBinding
 import com.busanit.community.databinding.CommentItemBinding
-import com.busanit.community.model.Board
+import com.busanit.community.model.ChildrenComment
 import com.busanit.community.model.Comment
+import com.busanit.community.model.NewChildren
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CommentAdapter(var comments : List<Comment>) : RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) {
+
             binding.commentUser.text = comment.userNickname
             binding.commentContent.text = comment.commentContent
             binding.commentTime.text = comment.commentTime
 
-            binding.root.setOnClickListener {
-                val context = it.context
-                val intent = Intent(context, BoardDetailActivity::class.java)
-                intent.putExtra("commentId", comment.commentId)
-                context.startActivity(intent)
-            }
 
+            val context = binding.root.context
+            binding.recyclerView.layoutManager = LinearLayoutManager(context)
+            binding.recyclerView.adapter = ChildrenAdapter(comment.childrenComments)
 
         }
-
-
 
     }
 

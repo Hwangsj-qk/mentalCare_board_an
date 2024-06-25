@@ -1,15 +1,14 @@
 package com.busanit.community.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.busanit.community.databinding.CommentItemBinding
+import com.busanit.community.databinding.ChildrenItemBinding
 import com.busanit.community.model.ChildrenComment
 
-class ChildrenAdapter(var children : List<ChildrenComment>) : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
+class ChildrenAdapter(var children: List<ChildrenComment>) : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
 
-    inner class ItemViewHolder(val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(val binding: ChildrenItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(children: ChildrenComment) {
             binding.commentUser.text = children.userNickname
             binding.commentContent.text = children.childrenContent
@@ -19,7 +18,7 @@ class ChildrenAdapter(var children : List<ChildrenComment>) : RecyclerView.Adapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding = CommentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+        val binding = ChildrenItemBinding.inflate(LayoutInflater.from(parent.context), parent, false )
         return ItemViewHolder(binding)
     }
 
