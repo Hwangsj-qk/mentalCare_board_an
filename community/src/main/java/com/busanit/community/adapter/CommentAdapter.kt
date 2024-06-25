@@ -1,8 +1,10 @@
 package com.busanit.community.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.busanit.community.activity.BoardDetailActivity
 import com.busanit.community.databinding.CommentItemBinding
 import com.busanit.community.model.Board
 import com.busanit.community.model.Comment
@@ -14,6 +16,15 @@ class CommentAdapter(var comments : List<Comment>) : RecyclerView.Adapter<Commen
             binding.commentUser.text = comment.userNickname
             binding.commentContent.text = comment.commentContent
             binding.commentTime.text = comment.commentTime
+
+            binding.root.setOnClickListener {
+                val context = it.context
+                val intent = Intent(context, BoardDetailActivity::class.java)
+                intent.putExtra("commentId", comment.commentId)
+                context.startActivity(intent)
+            }
+
+
         }
 
 

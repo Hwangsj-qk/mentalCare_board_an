@@ -5,8 +5,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.RetrofitClient
+import com.busanit.community.adapter.ChildrenAdapter
 import com.busanit.community.adapter.CommentAdapter
 import com.busanit.community.databinding.ActivityBoardDetailBinding
+import com.busanit.community.model.ChildrenComment
 import com.busanit.community.model.Comment
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,6 +55,8 @@ class BoardDetailActivity : AppCompatActivity() {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
         })
+
+        val commentId = intent.getLongExtra("commentId", -1)
 
 
 
