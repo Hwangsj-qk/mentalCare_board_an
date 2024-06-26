@@ -10,6 +10,7 @@ import com.busanit.community.model.NewChildren
 import com.busanit.community.model.NewComment
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -38,6 +39,9 @@ interface ApiService {
 
     @POST("/children")
     fun createChildren(@Body newChildren: NewChildren) : Call<ChildrenComment>
+
+    @DELETE("/board/delete/{boardId}")
+    fun deleteBoard(@Path("boardId") boardId: Long) : Call<Board>
 
 
 

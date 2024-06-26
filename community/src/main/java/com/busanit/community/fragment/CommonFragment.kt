@@ -1,7 +1,6 @@
 package com.busanit.community.fragment
 
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +11,8 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.model.Board
-import com.busanit.community.adapter.ItemAdapter
+import com.busanit.community.adapter.BoardAdapter
 import com.busanit.community.RetrofitClient
-import com.busanit.community.activity.BoardDetailActivity
-import com.busanit.community.activity.WriteActivity
 import com.busanit.community.databinding.FragmentCommonBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +22,7 @@ import retrofit2.Response
 class CommonFragment : Fragment() {
 
     lateinit var binding:FragmentCommonBinding
-    lateinit var itemAdapter: ItemAdapter
+    lateinit var boardAdapter: BoardAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,9 +40,9 @@ class CommonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemAdapter = ItemAdapter(listOf(), ::updateBoard, ::deleteBoard)
+        boardAdapter = BoardAdapter(listOf(), ::updateBoard, ::deleteBoard)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = itemAdapter
+        binding.recyclerView.adapter = boardAdapter
 
 
         getBoards()
@@ -58,7 +55,7 @@ class CommonFragment : Fragment() {
             override fun onResponse(call: Call<List<Board>>, response: Response<List<Board>>) {
                 if(response.isSuccessful) {
                     val boards = response.body() ?: emptyList()
-                    itemAdapter.updateBoards(boards)
+                    boardAdapter.updateBoards(boards)
                 } else {
                     Log.d("mylog", "onResponse: ${response.code()}")
                 }

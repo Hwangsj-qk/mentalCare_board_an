@@ -10,8 +10,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.RetrofitClient
-import com.busanit.community.adapter.ItemAdapter
-import com.busanit.community.databinding.FragmentCommonBinding
+import com.busanit.community.adapter.BoardAdapter
 import com.busanit.community.databinding.FragmentMentalBinding
 import com.busanit.community.model.Board
 import retrofit2.Call
@@ -22,7 +21,7 @@ import retrofit2.Response
 class MentalFragment : Fragment() {
 
     lateinit var binding:FragmentMentalBinding
-    lateinit var itemAdapter: ItemAdapter
+    lateinit var boardAdapter: BoardAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,9 +36,9 @@ class MentalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemAdapter = ItemAdapter(listOf(), ::updateBoard, ::deleteBoard)
+        boardAdapter = BoardAdapter(listOf(), ::updateBoard, ::deleteBoard)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = itemAdapter
+        binding.recyclerView.adapter = boardAdapter
 
 
         getBoards()
@@ -51,7 +50,7 @@ class MentalFragment : Fragment() {
             override fun onResponse(call: Call<List<Board>>, response: Response<List<Board>>) {
                 if(response.isSuccessful) {
                     val boards = response.body() ?: emptyList()
-                    itemAdapter.updateBoards(boards)
+                    boardAdapter.updateBoards(boards)
                 } else {
                     Log.d("mylog", "onResponse: ${response.code()}")
                 }

@@ -6,7 +6,3 @@ data class Comment (val boardId : Long,
                     val userNickname : String,
                     val commentId : Long,
                     val childrenComments: List<ChildrenComment>)
-
-data class CommentResponse(
-    val count : Int
-)

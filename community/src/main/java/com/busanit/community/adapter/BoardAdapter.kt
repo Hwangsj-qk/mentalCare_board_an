@@ -5,18 +5,16 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.busanit.community.activity.BoardDetailActivity
 import com.busanit.community.databinding.BoardItemBinding
 import com.busanit.community.model.Board
 
 
-class ItemAdapter(var boards: List<Board>,
-                  val onEdit : (Board) -> Unit,     // 수정 이벤트 핸들러
-                  val onDelete : (Long) -> Unit     // 삭제 이벤트 핸들러
-) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder> () {
+class BoardAdapter(var boards: List<Board>,
+                   val onEdit : (Board) -> Unit,     // 수정 이벤트 핸들러
+                   val onDelete : (Long) -> Unit     // 삭제 이벤트 핸들러
+) : RecyclerView.Adapter<BoardAdapter.ItemViewHolder> () {
 
     // 매개변수로 항목을 레이아웃 뷰 바인딩을 삽입
     inner class ItemViewHolder(val binding: BoardItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -57,16 +55,6 @@ class ItemAdapter(var boards: List<Board>,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(boards[position])
-
-//        // BoardDetailActivity로 이동
-//        holder.itemView.setOnClickListener{
-//            val intent = Intent(holder.itemView?.context, BoardDetailActivity::class.java)
-//            val board = boards[position]
-//            intent.putExtra("board", board)
-//            ContextCompat.startActivity(holder.itemView.context, intent, null)
-//        }
-
-
     }
 
     // 데이터의 개수

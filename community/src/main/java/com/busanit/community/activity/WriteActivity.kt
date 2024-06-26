@@ -26,7 +26,6 @@ class WriteActivity : AppCompatActivity() {
         binding = ActivityWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.run {
             completeButton.setOnClickListener {
                 val title = editTitle.text.toString()
