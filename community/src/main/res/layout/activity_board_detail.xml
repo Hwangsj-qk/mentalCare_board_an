@@ -33,21 +33,20 @@
             />
     </FrameLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/line"
-        android:paddingTop="8sp"/>
-
-
     <TextView
         android:id="@+id/boardTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="20sp"
-        android:text= "게시물 제목"
+        android:text="게시물 제목"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"
+        android:paddingTop="8sp"/>
 
 
     <LinearLayout
@@ -152,6 +151,8 @@
                 android:text="입력" />
 
         </LinearLayout>
+
+
 
 
     </LinearLayout>
