@@ -1,17 +1,30 @@
 package com.busanit.community.adapter
 
 
+import android.content.DialogInterface
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.busanit.community.ConfirmDialog
+import com.busanit.community.ConfirmDialogInterface
+import com.busanit.community.RetrofitClient
+import com.busanit.community.activity.BoardDetailActivity
 import com.busanit.community.databinding.CommentItemBinding
 import com.busanit.community.model.Comment
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.concurrent.thread
 
 
 class CommentAdapter(var comments : List<Comment>) : RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
+    val TAG = "mylog"
 
-    inner class ItemViewHolder(val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(comment: Comment) {
 
             binding.commentUser.text = comment.userNickname
@@ -23,11 +36,32 @@ class CommentAdapter(var comments : List<Comment>) : RecyclerView.Adapter<Commen
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             binding.recyclerView.adapter = ChildrenAdapter(comment.childrenComments)
 
-            binding.boardDeleteButton.setOnClickListener {
+            val intent = Intent(context, BoardDetailActivity::class.java)
+            intent.putExtra("commentId", comment.commentId)
 
+            binding.commentDeleteButton.setOnClickListener {
+                RetrofitClient.api.deleteComment(comment.commentId).enqueue(object : Callback<List<Comment>>{
+                    override fun onResponse(
+                        call: Call<List<Comment>>,
+                        response: Response<List<Comment>>
+                    ) {
+                        if(response.isSuccessful) {
+                            Log.d(TAG, "onResponse: ${response.body()}")
+
+                        } else {
+                            Log.d(TAG, "onResponse: ${response.body()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                        Log.d(TAG, "onFailure: ${t.message}")
+                    }
+                })
             }
 
         }
+
+
 
     }
 
@@ -46,5 +80,4 @@ class CommentAdapter(var comments : List<Comment>) : RecyclerView.Adapter<Commen
     fun updateComments(newComment: Comment) {
 
     }
-
 }

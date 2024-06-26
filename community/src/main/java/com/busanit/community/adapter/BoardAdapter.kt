@@ -42,6 +42,8 @@ class BoardAdapter(var boards: List<Board>,
                 context.startActivity(intent)
             }
 
+
+
         }
     }
 

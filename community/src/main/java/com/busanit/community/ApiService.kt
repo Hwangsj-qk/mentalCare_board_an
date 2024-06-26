@@ -41,7 +41,12 @@ interface ApiService {
     fun createChildren(@Body newChildren: NewChildren) : Call<ChildrenComment>
 
     @DELETE("/board/delete/{boardId}")
-    fun deleteBoard(@Path("boardId") boardId: Long) : Call<Board>
+    fun deleteBoard(@Path("boardId") boardId: Long) : Call <Board>
+
+    @DELETE("/comment/{commentId}")
+    fun deleteComment(@Path("commentId") commentId: Long) : Call<List<Comment>>
+
+
 
 
 

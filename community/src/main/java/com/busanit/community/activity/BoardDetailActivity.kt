@@ -2,6 +2,7 @@ package com.busanit.community.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,10 +11,14 @@ import com.busanit.community.ConfirmDialogInterface
 import com.busanit.community.RetrofitClient
 import com.busanit.community.adapter.CommentAdapter
 import com.busanit.community.databinding.ActivityBoardDetailBinding
+import com.busanit.community.databinding.ChildrenItemBinding
+import com.busanit.community.databinding.CommentItemBinding
 import com.busanit.community.model.Board
+import com.busanit.community.model.ChildrenComment
 import com.busanit.community.model.Comment
 import com.busanit.community.model.Heart
 import com.busanit.community.model.HeartResponse
+import com.busanit.community.model.NewChildren
 import com.busanit.community.model.NewComment
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +28,6 @@ private const val TAG = "BoardDetailActivity"
 class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
     lateinit var binding: ActivityBoardDetailBinding
 
-    private val commentList = mutableListOf<Comment>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBoardDetailBinding.inflate(layoutInflater)
@@ -64,7 +68,7 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
             }
         })
         
-        binding.heart.setOnClickListener { 
+        binding.heart.setOnClickListener() {
             val heart = Heart(1)
 
             RetrofitClient.api.upAndDownHeart(heart, boardId).enqueue(object : Callback<HeartResponse> {
@@ -107,9 +111,9 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                 }
             })
         }
-        
+
         binding.boardDeleteButton.setOnClickListener {
-            val dialog = ConfirmDialog(this, "패키지를 삭제하시겠습니까?", boardId)
+            val dialog = ConfirmDialog(this, "게시글을 삭제하시겠습니까?", boardId)
             dialog.isCancelable = false
             dialog.show(this.supportFragmentManager, "ConfirmDialog")
         }
@@ -117,8 +121,7 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
     }
 
     override fun onYesButtonClick(id: Long) {
-        RetrofitClient.api.deleteBoard(intent.getLongExtra("boardId", -1)).enqueue(object : Callback<
-            Board> {
+        RetrofitClient.api.deleteBoard(intent.getLongExtra("boardId", -1)).enqueue(object : Callback <Board> {
             override fun onResponse(call: Call<Board>, response: Response<Board>) {
                 if(response.isSuccessful) {
                     Toast.makeText(this@BoardDetailActivity, "게시글이 성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show()
@@ -128,7 +131,7 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                     Log.d(TAG, "onResponse: ${response.body()}")
                 }
             }
-            override fun onFailure(call: Call<Board>, t: Throwable) {
+            override fun onFailure(call: Call <Board>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
         })

@@ -11,4 +11,6 @@ data class Board(val boardTitle: String,
                  val boardCommentCount : Int,
                  val calculateTime : String,
                  val userNickname: String,
-                 val boardTag: String, val boardId: Long, val comments : List<Comment>)
+                 val boardTag: String,
+                 val boardId: Long,
+                 val comments : List<Comment>)
