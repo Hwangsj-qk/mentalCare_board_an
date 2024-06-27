@@ -27,6 +27,7 @@ import retrofit2.Response
 private const val TAG = "BoardDetailActivity"
 class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
     lateinit var binding: ActivityBoardDetailBinding
+    lateinit var commentAdapter: CommentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +55,12 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         val boardId = intent.getLongExtra("boardId", -1)
+        commentAdapter = CommentAdapter(listOf())
 
         RetrofitClient.api.getCommentsByBoardId(boardId).enqueue(object : Callback<List<Comment>> {
             override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
                 if(response.isSuccessful) {
-                    val comments = response.body() ?: emptyList()
+                    val comments = response.body() ?: emptyList<Comment>().toMutableList()
                     binding.recyclerView.adapter = CommentAdapter(comments)
 
                 }

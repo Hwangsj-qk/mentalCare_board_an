@@ -5,16 +5,16 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.busanit.community.DiffUtilCallback
 import com.busanit.community.activity.BoardDetailActivity
 import com.busanit.community.databinding.BoardItemBinding
 import com.busanit.community.model.Board
 
 
-class BoardAdapter(var boards: List<Board>,
-                   val onEdit : (Board) -> Unit,     // 수정 이벤트 핸들러
-                   val onDelete : (Long) -> Unit     // 삭제 이벤트 핸들러
-) : RecyclerView.Adapter<BoardAdapter.ItemViewHolder> () {
+class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ItemViewHolder> () {
+    private val boards = mutableListOf<Board>()
 
     // 매개변수로 항목을 레이아웃 뷰 바인딩을 삽입
     inner class ItemViewHolder(val binding: BoardItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -63,17 +63,17 @@ class BoardAdapter(var boards: List<Board>,
     override fun getItemCount(): Int = boards.size
 
     // 게시글 목록 갱신
-    fun updateBoards(newBoards : List<Board>) {
-        boards = newBoards
-        notifyDataSetChanged()
-    }
+    fun updateBoards(newBoards: List<Board>?) {
+        newBoards?.let {
+            val diffCallback = DiffUtilCallback(this.boards, newBoards)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-    fun getBoardTag(newBoards: List<Board>) {
-        for(board in newBoards) {
-            board.boardTag
+            this.boards.run {
+                clear()
+                addAll(newBoards)
+                diffResult.dispatchUpdatesTo(this@BoardAdapter)
+            }
         }
     }
-
-
 
 }

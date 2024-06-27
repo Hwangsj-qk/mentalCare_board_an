@@ -34,7 +34,7 @@ class CheeringFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        boardAdapter = BoardAdapter(listOf(), ::updateBoard, ::deleteBoard)
+        boardAdapter = BoardAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = boardAdapter
 
@@ -47,7 +47,7 @@ class CheeringFragment : Fragment() {
             override fun onResponse(call: Call<List<Board>>, response: Response<List<Board>>) {
                 if(response.isSuccessful) {
                     val boards = response.body() ?: emptyList()
-                    boardAdapter.updateBoards(boards)
+                    boardAdapter.updateBoards(boards.toMutableList())
                 } else {
                     Log.d("mylog", "onResponse: ${response.code()}")
                 }

@@ -1,16 +1,14 @@
 package com.busanit.community.adapter
 
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.busanit.community.ConfirmDialog
-import com.busanit.community.ConfirmDialogInterface
+import com.busanit.community.DiffUtilCallback
 import com.busanit.community.RetrofitClient
 import com.busanit.community.activity.BoardDetailActivity
 import com.busanit.community.databinding.CommentItemBinding
@@ -18,10 +16,10 @@ import com.busanit.community.model.Comment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.concurrent.thread
+import java.util.Collections.addAll
 
 
-class CommentAdapter(var comments : List<Comment>) : RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
+class CommentAdapter(val comments : List<Comment>) : RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
     val TAG = "mylog"
 
     inner class ItemViewHolder(val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root){
@@ -76,8 +74,16 @@ class CommentAdapter(var comments : List<Comment>) : RecyclerView.Adapter<Commen
         holder.bind(comments[position])
     }
 
-    // 댓글 목록 갱신
-    fun updateComments(newComment: Comment) {
+    fun updateComments(newComments: List<Comment>?) {
+        newComments?.let {
+            val diffCallback = DiffUtilCallback(this.comments, newComments)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
 
+            this.comments.toMutableList().run{
+                clear()
+                addAll(newComments)
+                diffResult.dispatchUpdatesTo(this@CommentAdapter)
+            }
+        }
     }
 }
