@@ -2,7 +2,6 @@ package com.busanit.community
 
 import androidx.recyclerview.widget.DiffUtil
 import com.busanit.community.model.Board
-import com.busanit.community.model.Comment
 
 class DiffUtilCallback(
     private val oldList: List<Any>,

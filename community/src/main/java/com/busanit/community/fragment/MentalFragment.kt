@@ -1,5 +1,6 @@
 package com.busanit.community.fragment
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.RetrofitClient
@@ -36,7 +38,18 @@ class MentalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        boardAdapter = BoardAdapter()
+        val activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) {
+                result ->
+            if(result.resultCode == Activity.RESULT_OK) {
+
+                result.data?.getLongExtra("deletedBoardId", 0L)?.let {
+                        deletedBoardId -> boardAdapter.removeById(deletedBoardId)
+                }
+            }
+        }
+
+        boardAdapter = BoardAdapter(activityResultLauncher)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = boardAdapter
 

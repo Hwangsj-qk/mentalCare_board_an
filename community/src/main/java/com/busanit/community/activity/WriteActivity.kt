@@ -2,14 +2,11 @@ package com.busanit.community.activity
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.busanit.community.R
 import com.busanit.community.RetrofitClient
+import com.busanit.community.adapter.BoardAdapter
 import com.busanit.community.databinding.ActivityWriteBinding
 import com.busanit.community.model.Board
 import com.busanit.community.model.NewBoard
@@ -20,11 +17,15 @@ import retrofit2.Response
 class WriteActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityWriteBinding
+    lateinit var boards: List<Board>
+    lateinit var boardAdapter: BoardAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         binding.run {
             completeButton.setOnClickListener {
@@ -46,6 +47,10 @@ class WriteActivity : AppCompatActivity() {
                             Toast.makeText(this@WriteActivity, "새로운 게시글 작성", Toast.LENGTH_SHORT)
                                 .show()
                             Log.d("mylog", "onResponse: ${response.body()}")
+                            val board = response.body()!!
+                            val boardMutableList = boards.toMutableList()
+                            boardMutableList.add(board)
+                            boardAdapter.updateBoards(boardMutableList.toList())
                             finish()
                         } else {
                             Toast.makeText(this@WriteActivity, "응답 실패 ${response.code()} ${response.message()}", Toast.LENGTH_SHORT).show()

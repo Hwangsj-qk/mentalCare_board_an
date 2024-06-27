@@ -44,7 +44,7 @@ interface ApiService {
     fun deleteBoard(@Path("boardId") boardId: Long) : Call <Board>
 
     @DELETE("/comment/{commentId}")
-    fun deleteComment(@Path("commentId") commentId: Long) : Call<List<Comment>>
+    fun deleteComment(@Path("commentId") commentId: Long) : Call<Comment>
 
 
 

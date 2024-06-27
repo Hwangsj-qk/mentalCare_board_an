@@ -2,8 +2,10 @@ package com.busanit.community.adapter
 
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,12 +14,15 @@ import com.busanit.community.activity.BoardDetailActivity
 import com.busanit.community.databinding.BoardItemBinding
 import com.busanit.community.model.Board
 
+private const val TAG = "BoardAdapter"
 
-class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ItemViewHolder> () {
+class BoardAdapter(val activityResultLauncher: ActivityResultLauncher<Intent>) :
+    RecyclerView.Adapter<BoardAdapter.ItemViewHolder>() {
     private val boards = mutableListOf<Board>()
 
     // 매개변수로 항목을 레이아웃 뷰 바인딩을 삽입
-    inner class ItemViewHolder(val binding: BoardItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(val binding: BoardItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(board: Board) {
@@ -39,9 +44,11 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ItemViewHolder> () {
                 intent.putExtra("commentCount", board.boardCommentCount)
                 intent.putExtra("boardTag", board.boardTag)
                 intent.putExtra("boardTime", board.calculateTime)
-                context.startActivity(intent)
-            }
+                Log.d(TAG, "bind: borardId ${board.boardId}")
+                // context.startActivity(intent)
+                activityResultLauncher.launch(intent)
 
+            }
 
 
         }
@@ -49,7 +56,7 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ItemViewHolder> () {
 
     // 어댑터의 메서드 구현
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-       val binding = BoardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = BoardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -73,6 +80,15 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ItemViewHolder> () {
                 addAll(newBoards)
                 diffResult.dispatchUpdatesTo(this@BoardAdapter)
             }
+        }
+    }
+
+    fun removeById(boardId: Long) {
+        val position = boards.indexOfFirst { it.boardId == boardId }
+
+        if (position != -1) {
+            boards.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
 

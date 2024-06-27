@@ -1,6 +1,7 @@
 package com.busanit.community.fragment
 
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.model.Board
@@ -18,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
+private const val TAG = "CommonFragment"
 class CommonFragment : Fragment() {
 
     lateinit var binding:FragmentCommonBinding
@@ -32,15 +34,26 @@ class CommonFragment : Fragment() {
         return binding.root
 
 
-
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        boardAdapter = BoardAdapter()
+        val activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) {
+                result ->
+            if(result.resultCode == Activity.RESULT_OK) {
+
+                result.data?.getLongExtra("deletedBoardId", 0L)?.let {
+                        deletedBoardId -> boardAdapter.removeById(deletedBoardId)
+                }
+            }
+        }
+
+        boardAdapter = BoardAdapter(activityResultLauncher)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = boardAdapter
 
@@ -54,8 +67,8 @@ class CommonFragment : Fragment() {
         RetrofitClient.api.boardTagCommon().enqueue(object : Callback<List<Board>> {
             override fun onResponse(call: Call<List<Board>>, response: Response<List<Board>>) {
                 if(response.isSuccessful) {
-                    val boards = response.body() ?: emptyList()
-                    boardAdapter.updateBoards(boards.toMutableList())
+                    val boards = response.body() ?: emptyList<Board>().toMutableList()
+                    boardAdapter.updateBoards(boards)
                 } else {
                     Log.d("mylog", "onResponse: ${response.code()}")
                 }
@@ -66,17 +79,6 @@ class CommonFragment : Fragment() {
             }
 
         })
-    }
-
-
-    // 수정 이벤트 핸들러
-    private fun updateBoard(board: Board) {
-
-    }
-
-    // 삭제 이벤트 핸들러
-    private fun deleteBoard(boardId : Long) {
-
     }
 
 }
