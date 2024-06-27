@@ -1,9 +1,12 @@
 package com.busanit.community.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import com.busanit.community.databinding.ChildrenItemBinding
+import com.busanit.community.databinding.CommentItemBinding
 import com.busanit.community.model.ChildrenComment
 
 class ChildrenAdapter(var children: List<ChildrenComment>) : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
@@ -14,7 +17,6 @@ class ChildrenAdapter(var children: List<ChildrenComment>) : RecyclerView.Adapte
             binding.commentContent.text = children.childrenContent
             binding.commentTime.text = children.childrenTime
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

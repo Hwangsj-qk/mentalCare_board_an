@@ -42,7 +42,6 @@ class CheeringFragment : Fragment() {
             ActivityResultContracts.StartActivityForResult()) {
                 result ->
             if(result.resultCode == Activity.RESULT_OK) {
-
                 result.data?.getLongExtra("deletedBoardId", 0L)?.let {
                         deletedBoardId -> boardAdapter.removeById(deletedBoardId)
                 }
@@ -73,17 +72,6 @@ class CheeringFragment : Fragment() {
             }
 
         })
-    }
-
-
-    // 수정 이벤트 핸들러
-    private fun updateBoard(board: Board) {
-
-    }
-
-    // 삭제 이벤트 핸들러
-    private fun deleteBoard(boardId : Long) {
-
     }
 
 }

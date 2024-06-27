@@ -13,6 +13,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -45,6 +46,10 @@ interface ApiService {
 
     @DELETE("/comment/{commentId}")
     fun deleteComment(@Path("commentId") commentId: Long) : Call<Comment>
+
+    @PUT("/board/update/{boardId}")
+    fun updateBoard(@Path("boardId") boardId: Long) : Call<Board>
+
 
 
 

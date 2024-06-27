@@ -56,12 +56,6 @@
         android:paddingBottom="8dp">
 
         <Button
-            android:id="@+id/commentModifyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="수정" />
-
-        <Button
             android:id="@+id/commentDeleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

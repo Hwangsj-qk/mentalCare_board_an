@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.ConfirmDialogInterface
@@ -12,10 +14,13 @@ import com.busanit.community.RetrofitClient
 import com.busanit.community.adapter.BoardAdapter
 import com.busanit.community.adapter.CommentAdapter
 import com.busanit.community.databinding.ActivityBoardDetailBinding
+import com.busanit.community.databinding.CommentItemBinding
 import com.busanit.community.model.Board
+import com.busanit.community.model.ChildrenComment
 import com.busanit.community.model.Comment
 import com.busanit.community.model.Heart
 import com.busanit.community.model.HeartResponse
+import com.busanit.community.model.NewChildren
 import com.busanit.community.model.NewComment
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,10 +28,9 @@ import retrofit2.Response
 
 private const val TAG = "BoardDetailActivity"
 
-class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
+class BoardDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityBoardDetailBinding
     lateinit var commentAdapter: CommentAdapter
-    lateinit var boardAdapter: BoardAdapter
     lateinit var comments: List<Comment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,23 +59,26 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         val boardId = intent.getLongExtra("boardId", -1)
-        commentAdapter = CommentAdapter(listOf())
+
+        commentAdapter = CommentAdapter()
 
         RetrofitClient.api.getCommentsByBoardId(boardId).enqueue(object : Callback<List<Comment>> {
             override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
                 if (response.isSuccessful) {
                     comments = response.body() ?: emptyList<Comment>().toMutableList()
+                    Log.d(TAG, "onResponse: ${response.body()}")
                     binding.recyclerView.adapter = commentAdapter
                     commentAdapter.updateComments(comments)
+                } else {
+                    Log.d(TAG, "onResponse: ${response.body()}")
                 }
             }
-
             override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
         })
 
-        binding.heart.setOnClickListener() {
+        binding.heart.setOnClickListener {
             val heart = Heart(1)
 
             RetrofitClient.api.upAndDownHeart(heart, boardId)
@@ -88,7 +95,6 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                             binding.heartCount.text = count.toString()
                         }
                     }
-
                     override fun onFailure(call: Call<HeartResponse>, t: Throwable) {
                         Toast.makeText(
                             this@BoardDetailActivity,
@@ -101,46 +107,47 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
         }
 
         binding.commentButton.setOnClickListener {
-            val commentContent = binding.commentContent.text.toString()
-            val newComment = NewComment(commentContent, "마이콜", boardId)
+                val commentContent = binding.commentContent.text.toString()
+                val newComment = NewComment(commentContent, "마이콜", boardId)
 
-            RetrofitClient.api.createComment(newComment).enqueue(object : Callback<Comment> {
-                override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(this@BoardDetailActivity, "새로운 댓글 작성", Toast.LENGTH_SHORT)
-                            .show()
-                        binding.commentContent.text.clear()
-                        val comment = response.body()!!
-                        val commentMutableList = comments.toMutableList()
-                        commentMutableList.add(comment)
-                        commentAdapter.updateComments(commentMutableList.toList())
-                        Log.d(TAG, "onResponse: ${response.body()}")
-                        binding.commentCount.text =
-                            (intent.getIntExtra("commentCount", 0) + 1).toString()
-                    } else {
-                        Log.d(TAG, "onResponse: ${response.body()}")
+                RetrofitClient.api.createComment(newComment).enqueue(object : Callback<Comment> {
+                    override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(
+                                this@BoardDetailActivity,
+                                "새로운 댓글 작성",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            binding.commentContent.text.clear()
+                            val comment = response.body()!!
+                            val commentMutableList = comments.toMutableList()
+                            commentMutableList.add(comment)
+                            commentAdapter.updateComments(commentMutableList.toList())
+                            Log.d(TAG, "onResponse: ${response.body()}")
+                            binding.commentCount.text =
+                                (intent.getIntExtra("commentCount", 0) + 1).toString()
+                        } else {
+                            Log.d(TAG, "onResponse: ${response.body()}")
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<Comment>, t: Throwable) {
-                    Log.d(TAG, "onFailure: ${t.message}")
-                }
-            })
+                    override fun onFailure(call: Call<Comment>, t: Throwable) {
+                        Log.d(TAG, "onFailure: ${t.message}")
+                    }
+                })
         }
 
         binding.boardDeleteButton.setOnClickListener {
-            RetrofitClient.api.deleteBoard(intent.getLongExtra("boardId", -1))
+            RetrofitClient.api.deleteBoard(boardId)
                 .enqueue(object : Callback<Board> {
                     override fun onResponse(call: Call<Board>, response: Response<Board>) {
                         if (response.isSuccessful) {
                             val resultIntent = Intent().apply {
-
                                 putExtra("deletedBoardId",boardId)
-
                             }
                             setResult(Activity.RESULT_OK, resultIntent)
                             Toast.makeText(this@BoardDetailActivity, "게시글이 성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                            finish()
                             Log.d(TAG, "onResponse: ${response.body()}")
                         } else {
                             Log.d(TAG, "onResponse: ${response.body()}")
@@ -154,10 +161,10 @@ class BoardDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
 
         }
 
-    }
+        binding.boardModifyButton.setOnClickListener {
 
-    override fun onYesButtonClick(id: Long) {
-        TODO("Not yet implemented")
+        }
+
     }
 
 }

@@ -33,8 +33,9 @@ class BoardAdapter(val activityResultLauncher: ActivityResultLauncher<Intent>) :
             binding.heartCount.text = board.boardLikeCount.toString()
             binding.commentCount.text = board.boardCommentCount.toString()
 
+            val context = binding.root.context
             binding.root.setOnClickListener {
-                val context = it.context
+
                 val intent = Intent(context, BoardDetailActivity::class.java)
                 intent.putExtra("boardId", board.boardId)
                 intent.putExtra("boardTitle", board.boardTitle)
@@ -44,10 +45,7 @@ class BoardAdapter(val activityResultLauncher: ActivityResultLauncher<Intent>) :
                 intent.putExtra("commentCount", board.boardCommentCount)
                 intent.putExtra("boardTag", board.boardTag)
                 intent.putExtra("boardTime", board.calculateTime)
-                Log.d(TAG, "bind: borardId ${board.boardId}")
-                // context.startActivity(intent)
                 activityResultLauncher.launch(intent)
-
             }
 
 
