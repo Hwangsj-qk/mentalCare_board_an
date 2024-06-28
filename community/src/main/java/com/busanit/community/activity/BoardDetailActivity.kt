@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.busanit.community.ConfirmDialogInterface
 import com.busanit.community.RetrofitClient
 import com.busanit.community.adapter.BoardAdapter
 import com.busanit.community.adapter.CommentAdapter
@@ -162,6 +161,20 @@ class BoardDetailActivity : AppCompatActivity() {
         }
 
         binding.boardModifyButton.setOnClickListener {
+            val boardId = intent.getStringExtra("boardId")
+            val boardTitle = intent.getStringExtra("boardTitle")
+            val boardContent = intent.getStringExtra("boardContent")
+            val userNickname = intent.getStringExtra("userNickname")
+            val boardTag = intent.getStringExtra("boardTag")
+
+            val writeIntent = Intent(this, WriteActivity::class.java)
+            intent.putExtra("boardId", boardId)
+            intent.putExtra("boardTitle", boardTitle)
+            intent.putExtra("boardContent", boardContent)
+            intent.putExtra("userNickname", userNickname)
+            intent.putExtra("boardTag", boardTag)
+            startActivity(writeIntent)
+
 
         }
 

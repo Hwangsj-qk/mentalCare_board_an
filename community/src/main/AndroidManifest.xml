@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalCare_Community"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".activity.CommentDetailActivity"
             android:exported="true">
@@ -29,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.WriteActivity"
             android:exported="true">

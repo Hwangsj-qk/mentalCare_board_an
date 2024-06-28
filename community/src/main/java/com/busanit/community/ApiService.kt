@@ -48,7 +48,13 @@ interface ApiService {
     fun deleteComment(@Path("commentId") commentId: Long) : Call<Comment>
 
     @PUT("/board/update/{boardId}")
-    fun updateBoard(@Path("boardId") boardId: Long) : Call<Board>
+    fun updateBoard(@Body board: Board, @Path("boardId") boardId: Long) : Call<Board>
+
+    @GET("children/commentId/{commentId}")
+    fun getChildrenByCommentId(@Path("commentId") commentId : Long) : Call<List<ChildrenComment>>
+
+    @DELETE("children/{childrenId}")
+    fun deleteChildrenComment(@Path("childrenId") childrenId :Long) : Call<ChildrenComment>
 
 
 

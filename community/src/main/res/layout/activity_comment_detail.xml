@@ -1,10 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CommentDetailActivity">
+    tools:context=".activity.CommentDetailActivity"
+    android:orientation="vertical"
+    android:padding="30sp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/commentUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="글쓴이"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+
+
+    <TextView
+        android:id="@+id/commentContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="댓글을 적는 댓글댓글 댓글"
+        android:paddingTop="8dp"
+        />
+
+
+    <TextView
+        android:id="@+id/commentTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="댓글을 적은 날짜"
+        android:textSize="12sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
+
+        <EditText
+            android:id="@+id/commentContentWrite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="댓글을 입력하세요"
+            android:inputType="text"
+            android:layout_weight="3" />
+
+        <Button
+            android:id="@+id/commentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="입력" />
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

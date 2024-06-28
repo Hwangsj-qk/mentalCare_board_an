@@ -2,7 +2,6 @@ package com.busanit.community.adapter
 
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
@@ -81,7 +80,7 @@ class BoardAdapter(val activityResultLauncher: ActivityResultLauncher<Intent>) :
         }
     }
 
-    fun removeById(boardId: Long) {
+    fun removeByBoardId(boardId: Long) {
         val position = boards.indexOfFirst { it.boardId == boardId }
 
         if (position != -1) {

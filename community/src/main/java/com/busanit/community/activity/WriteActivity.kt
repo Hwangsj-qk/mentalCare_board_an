@@ -63,6 +63,10 @@ class WriteActivity : AppCompatActivity() {
                 })
 
             }
+
+            binding.editTitle.setText(intent.getStringExtra("boardTitle"))
+
+
         }
     }
 }

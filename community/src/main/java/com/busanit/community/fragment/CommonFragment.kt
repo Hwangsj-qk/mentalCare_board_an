@@ -48,7 +48,7 @@ class CommonFragment : Fragment() {
             if(result.resultCode == Activity.RESULT_OK) {
 
                 result.data?.getLongExtra("deletedBoardId", 0L)?.let {
-                        deletedBoardId -> boardAdapter.removeById(deletedBoardId)
+                        deletedBoardId -> boardAdapter.removeByBoardId(deletedBoardId)
                 }
             }
         }
