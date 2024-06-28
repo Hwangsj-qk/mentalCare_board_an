@@ -61,10 +61,9 @@ class WriteActivity : AppCompatActivity() {
                         Log.d("mylog", "onFailure: ${t.message}")
                     }
                 })
-
             }
 
-            binding.editTitle.setText(intent.getStringExtra("boardTitle"))
+
 
 
         }

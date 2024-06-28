@@ -59,6 +59,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
         val boardId = intent.getLongExtra("boardId", -1)
 
+
         commentAdapter = CommentAdapter()
 
         RetrofitClient.api.getCommentsByBoardId(boardId).enqueue(object : Callback<List<Comment>> {
@@ -161,22 +162,40 @@ class BoardDetailActivity : AppCompatActivity() {
         }
 
         binding.boardModifyButton.setOnClickListener {
-            val boardId = intent.getStringExtra("boardId")
             val boardTitle = intent.getStringExtra("boardTitle")
             val boardContent = intent.getStringExtra("boardContent")
             val userNickname = intent.getStringExtra("userNickname")
             val boardTag = intent.getStringExtra("boardTag")
+            val boardLikeCount = intent.getIntExtra("boardLikeCount", -1)
+            val boardCommentCount = intent.getIntExtra("boardCommentCount", -1)
+            val calculateTime = intent.getStringExtra("calculateTime")
 
-            val writeIntent = Intent(this, WriteActivity::class.java)
+
+            Log.d(TAG, "onCreate: 수정버튼 클릭시  ${boardId}")
+            val intent = Intent(this, UpdateActivity::class.java)
             intent.putExtra("boardId", boardId)
             intent.putExtra("boardTitle", boardTitle)
             intent.putExtra("boardContent", boardContent)
             intent.putExtra("userNickname", userNickname)
             intent.putExtra("boardTag", boardTag)
-            startActivity(writeIntent)
+            intent.putExtra("boardLikeCount", boardLikeCount)
+            intent.putExtra("boardCommentCount", boardCommentCount)
+            intent.putExtra("calculateTime", calculateTime)
+            startActivity(intent)
 
+
+            activityResultLauncher = registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    RetrofitClient.api.
+
+                }
+            }
 
         }
+
+
 
     }
 

@@ -8,6 +8,7 @@ import com.busanit.community.model.Heart
 import com.busanit.community.model.NewBoard
 import com.busanit.community.model.NewChildren
 import com.busanit.community.model.NewComment
+import com.busanit.community.model.UpdateBoard
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -48,7 +49,7 @@ interface ApiService {
     fun deleteComment(@Path("commentId") commentId: Long) : Call<Comment>
 
     @PUT("/board/update/{boardId}")
-    fun updateBoard(@Body board: Board, @Path("boardId") boardId: Long) : Call<Board>
+    fun updateBoard(@Body updateBoard: UpdateBoard, @Path("boardId") boardId: Long) : Call<Board>
 
     @GET("children/commentId/{commentId}")
     fun getChildrenByCommentId(@Path("commentId") commentId : Long) : Call<List<ChildrenComment>>
