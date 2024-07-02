@@ -1,5 +1,6 @@
 package com.busanit.community.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,8 +23,6 @@ import retrofit2.Response
 private const val TAG = "UpdateActivity"
 class UpdateActivity : AppCompatActivity() {
     lateinit var binding: ActivityUpdateBinding
-    //lateinit var boards : List<Board>
-    //lateinit var boardAdapter: BoardAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +61,13 @@ class UpdateActivity : AppCompatActivity() {
                     if(response.isSuccessful) {
                         Toast.makeText(this@UpdateActivity, "게시글 수정 완료", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
-                        val resultIntent = Intent().apply {
-                            putExtra("updatedBoardId", boardId)
+                        val resultIntent = Intent(this@UpdateActivity, BoardDetailActivity::class.java).apply {
+                            putExtra("newBoardContent", response.body()?.boardContent)
+                            putExtra("newBoardTitle", response.body()?.boardTitle)
+                            putExtra("newBoardTag", response.body()?.boardTag)
+                            putExtra("modifyBoardId", response.body()?.boardId)
                         }
-
+                        setResult(Activity.RESULT_OK, resultIntent)
                         finish()
                     }else{
                         Log.d(TAG, "onResponse: 응답 실패 ${response.body()}")

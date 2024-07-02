@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.R
 import com.busanit.community.RetrofitClient
 import com.busanit.community.adapter.ChildrenAdapter
+import com.busanit.community.databinding.ActivityBoardDetailBinding
 import com.busanit.community.databinding.ActivityCommentDetailBinding
 import com.busanit.community.model.ChildrenComment
 import com.busanit.community.model.NewChildren
@@ -39,10 +40,7 @@ class CommentDetailActivity : AppCompatActivity() {
         val commentId = intent.getLongExtra("commentId", -1)
 
         RetrofitClient.api.getChildrenByCommentId(commentId).enqueue(object : Callback<List<ChildrenComment>> {
-            override fun onResponse(
-                call: Call<List<ChildrenComment>>,
-                response: Response<List<ChildrenComment>>
-            ) {
+            override fun onResponse(call: Call<List<ChildrenComment>>, response: Response<List<ChildrenComment>>) {
                 if(response.isSuccessful) {
                     childrenComments = response.body() ?: emptyList()
                     binding.recyclerView.adapter = childrenAdapter
@@ -74,10 +72,10 @@ class CommentDetailActivity : AppCompatActivity() {
                         val childrenMutableList = childrenComments.toMutableList()
                         childrenMutableList.add(childrenComment)
                         childrenAdapter.updateChildren(childrenMutableList)
-
                         binding.commentContentWrite.text.clear()
-
                         Toast.makeText(this@CommentDetailActivity, "답글 작성 완료", Toast.LENGTH_SHORT).show()
+
+
                         Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
                     } else {
                         Log.d(TAG, "onResponse: 응답 실패 ${response.body()}")

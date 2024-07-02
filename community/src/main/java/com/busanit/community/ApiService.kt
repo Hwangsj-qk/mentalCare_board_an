@@ -57,6 +57,9 @@ interface ApiService {
     @DELETE("children/{childrenId}")
     fun deleteChildrenComment(@Path("childrenId") childrenId :Long) : Call<ChildrenComment>
 
+    @GET("/board/{boardId}")
+    fun getBoardBYId(@Path("boardId") boardId: Long) : Call<Board>
+
 
 
 

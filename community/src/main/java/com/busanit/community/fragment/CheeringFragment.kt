@@ -20,7 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CheeringFragment : Fragment() {
-    lateinit var binding:FragmentMentalBinding
+    lateinit var binding: FragmentMentalBinding
     lateinit var boardAdapter: BoardAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,15 +33,15 @@ class CheeringFragment : Fragment() {
 
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) {
-                result ->
-            if(result.resultCode == Activity.RESULT_OK) {
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            getBoards()
+            if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.getLongExtra("deletedBoardId", 0L)?.let {
                         deletedBoardId -> boardAdapter.removeByBoardId(deletedBoardId)
                 }
@@ -59,7 +59,7 @@ class CheeringFragment : Fragment() {
     private fun getBoards() {
         RetrofitClient.api.boardTagCheering().enqueue(object : Callback<List<Board>> {
             override fun onResponse(call: Call<List<Board>>, response: Response<List<Board>>) {
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     val boards = response.body() ?: emptyList()
                     boardAdapter.updateBoards(boards.toMutableList())
                 } else {

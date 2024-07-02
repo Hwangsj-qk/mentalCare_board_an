@@ -34,7 +34,6 @@ class BoardAdapter(val activityResultLauncher: ActivityResultLauncher<Intent>) :
 
             val context = binding.root.context
             binding.root.setOnClickListener {
-
                 val intent = Intent(context, BoardDetailActivity::class.java)
                 intent.putExtra("boardId", board.boardId)
                 intent.putExtra("boardTitle", board.boardTitle)
@@ -88,5 +87,8 @@ class BoardAdapter(val activityResultLauncher: ActivityResultLauncher<Intent>) :
             notifyItemRemoved(position)
         }
     }
+
+
+
 
 }

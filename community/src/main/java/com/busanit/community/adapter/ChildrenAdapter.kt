@@ -1,14 +1,19 @@
 package com.busanit.community.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.busanit.community.DiffUtilCallback
 import com.busanit.community.RetrofitClient
+import com.busanit.community.activity.BoardDetailActivity
+import com.busanit.community.databinding.ActivityBoardDetailBinding
 import com.busanit.community.databinding.ChildrenItemBinding
+import com.busanit.community.databinding.CommentItemBinding
 import com.busanit.community.model.ChildrenComment
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +22,7 @@ import java.util.Collections.addAll
 
 private const val TAG = "ChildrenAdapter"
 class ChildrenAdapter : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
-    var childrenComments = mutableListOf<ChildrenComment>()
+    var childrenComments: MutableList<ChildrenComment> = mutableListOf<ChildrenComment>()
 
     inner class ItemViewHolder(val binding: ChildrenItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(children: ChildrenComment) {
@@ -33,9 +38,13 @@ class ChildrenAdapter : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
                     ) {
                         if(response.isSuccessful) {
                             removeByChildrenId(children.childrenId)
-
                             Toast.makeText(it.context, "대댓글 삭제 성공", Toast.LENGTH_SHORT).show()
                             Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
+
+                            val activity = binding.root.context as BoardDetailActivity
+                            val count = activity.binding.commentCount.text.toString().toInt()
+                            activity.binding.commentCount.text = (count - 1).toString()
+
                         } else {
                             Log.d(TAG, "onResponse: 응답 실패 ${response.body()}")
                         }
@@ -47,8 +56,6 @@ class ChildrenAdapter : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
                 })
             }
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -63,7 +70,7 @@ class ChildrenAdapter : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
     }
 
     // 댓글 목록 갱신
-    fun updateChildren(newChildren: List<ChildrenComment>?) {
+    fun updateChildren(newChildren: MutableList<ChildrenComment>?) {
         newChildren?.let {
             val diffCallback = DiffUtilCallback(this.childrenComments, newChildren)
             val diffResult = DiffUtil.calculateDiff(diffCallback)

@@ -43,10 +43,10 @@ class CommonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) {
-                result ->
-            if(result.resultCode == Activity.RESULT_OK) {
-
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            getBoards()
+            if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.getLongExtra("deletedBoardId", 0L)?.let {
                         deletedBoardId -> boardAdapter.removeByBoardId(deletedBoardId)
                 }
@@ -56,7 +56,6 @@ class CommonFragment : Fragment() {
         boardAdapter = BoardAdapter(activityResultLauncher)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = boardAdapter
-
 
         getBoards()
 

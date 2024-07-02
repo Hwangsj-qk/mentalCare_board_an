@@ -40,6 +40,7 @@ class WriteActivity : AppCompatActivity() {
                 }
 
                 val newBoard = NewBoard(tag, title, content, "희동이")
+                boards = mutableListOf()
 
                 RetrofitClient.api.createBoard(newBoard).enqueue(object : Callback<Board> {
                     override fun onResponse(call: Call<Board>, response: Response<Board>) {

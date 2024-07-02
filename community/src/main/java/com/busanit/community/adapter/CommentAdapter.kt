@@ -1,16 +1,19 @@
 package com.busanit.community.adapter
 
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.busanit.community.CommentDiff
 import com.busanit.community.RetrofitClient
+import com.busanit.community.activity.BoardDetailActivity
 import com.busanit.community.activity.CommentDetailActivity
 import com.busanit.community.databinding.CommentItemBinding
 import com.busanit.community.model.ChildrenComment
@@ -18,10 +21,10 @@ import com.busanit.community.model.Comment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Collections.addAll
 
-
+private const val TAG = "CommentAdapter"
 class CommentAdapter: RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
-    val TAG = "mylog"
     private var comments = mutableListOf<Comment>()
     lateinit var childrenComments : List<ChildrenComment>
     lateinit var childrenAdapter : ChildrenAdapter
@@ -33,20 +36,24 @@ class CommentAdapter: RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
             binding.commentContent.text = comment.commentContent
             binding.commentTime.text = comment.commentTime
 
+            childrenAdapter = ChildrenAdapter()
+            binding.recyclerView.adapter = childrenAdapter
 
             val context = binding.root.context
 
-            childrenAdapter= ChildrenAdapter()
 
-            binding.recyclerView.layoutManager = LinearLayoutManager(context)
+
+
+            childrenAdapter = ChildrenAdapter()
 
             RetrofitClient.api.getChildrenByCommentId(comment.commentId).enqueue(object : Callback<List<ChildrenComment>>{
                 override fun onResponse(call: Call<List<ChildrenComment>>, response: Response<List<ChildrenComment>>) {
                     if(response.isSuccessful) {
                         childrenComments = response.body() ?: emptyList()
                         binding.recyclerView.adapter = childrenAdapter
-                        childrenAdapter.updateChildren(childrenComments.toMutableList())
-                        Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
+                        //childrenAdapter.updateChildren(childrenComments.toMutableList())
+
+                        Log.d(TAG, "onResponse: childrenComments ${childrenComments}")
 
                     } else {
                         Log.d(TAG, "onResponse: 응답 실패 ${response.body()}")
@@ -58,8 +65,6 @@ class CommentAdapter: RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
                 }
             })
 
-
-
             binding.commentDeleteButton.setOnClickListener {
                 RetrofitClient.api.deleteComment(comment.commentId).enqueue(object : Callback<Comment> {
                     override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
@@ -67,6 +72,12 @@ class CommentAdapter: RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
                             removeByCommentId(comment.commentId)
                             Log.d(TAG, "onResponse: ${response.body()}")
                             Toast.makeText(it.context, "댓글이 정상적으로 삭제되었습니다", Toast.LENGTH_SHORT).show()
+
+                            val activity = binding.root.context as BoardDetailActivity
+                            val count = activity.binding.commentCount.text.toString().toInt()
+                            activity.binding.commentCount.text = (count - 1).toString()
+
+
                         }
                     }
                     override fun onFailure(call: Call<Comment>, t: Throwable) {

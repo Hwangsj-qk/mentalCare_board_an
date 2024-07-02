@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.busanit.community.RetrofitClient
 import com.busanit.community.adapter.BoardAdapter
+import com.busanit.community.adapter.ChildrenAdapter
 import com.busanit.community.adapter.CommentAdapter
 import com.busanit.community.databinding.ActivityBoardDetailBinding
 import com.busanit.community.databinding.CommentItemBinding
@@ -37,30 +40,21 @@ class BoardDetailActivity : AppCompatActivity() {
         binding = ActivityBoardDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        val boardId = intent.getLongExtra("boardId", -1)
+        val boardTitle = intent.getStringExtra("boardTitle")
+        val userNickName = intent.getStringExtra("userNickname")
+        val boardTime = intent.getStringExtra("boardTime")
+        val boardContent = intent.getStringExtra("boardContent")
+        val heartCount = intent.getIntExtra("heartCount", 0)
+        val commentCount = intent.getIntExtra("commentCount", 0)
         val boardTag = intent.getStringExtra("boardTag")
-
-        if (boardTag == "COMMON") {
-            binding.boardTag.text = "일반고민 게시판"
-        } else if (boardTag == "MENTAL") {
-            binding.boardTag.text = "정신건강 게시판"
-        } else {
-            binding.boardTag.text = "응원 게시판"
-        }
-
-        binding.boardTitle.text = intent.getStringExtra("boardTitle")
-        binding.userNickName.text = intent.getStringExtra("userNickname")
-        binding.boardTime.text = intent.getStringExtra("boardTime")
-        binding.BoardContent.text = intent.getStringExtra("boardContent")
-        binding.heartCount.text = intent.getIntExtra("heartCount", 0).toString()
-        binding.commentCount.text = intent.getIntExtra("commentCount", 0).toString()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val boardId = intent.getLongExtra("boardId", -1)
-
+        inputBoardText(boardTitle, userNickName, boardTime, boardContent, heartCount, commentCount, boardTag)
 
         commentAdapter = CommentAdapter()
+
 
         RetrofitClient.api.getCommentsByBoardId(boardId).enqueue(object : Callback<List<Comment>> {
             override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
@@ -73,10 +67,12 @@ class BoardDetailActivity : AppCompatActivity() {
                     Log.d(TAG, "onResponse: ${response.body()}")
                 }
             }
+
             override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
         })
+
 
         binding.heart.setOnClickListener {
             val heart = Heart(1)
@@ -95,6 +91,7 @@ class BoardDetailActivity : AppCompatActivity() {
                             binding.heartCount.text = count.toString()
                         }
                     }
+
                     override fun onFailure(call: Call<HeartResponse>, t: Throwable) {
                         Toast.makeText(
                             this@BoardDetailActivity,
@@ -107,35 +104,32 @@ class BoardDetailActivity : AppCompatActivity() {
         }
 
         binding.commentButton.setOnClickListener {
-                val commentContent = binding.commentContent.text.toString()
-                val newComment = NewComment(commentContent, "마이콜", boardId)
+            val commentContent = binding.commentContent.text.toString()
+            val newComment = NewComment(commentContent, "마이콜", boardId)
 
-                RetrofitClient.api.createComment(newComment).enqueue(object : Callback<Comment> {
-                    override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
-                        if (response.isSuccessful) {
-                            Toast.makeText(
-                                this@BoardDetailActivity,
-                                "새로운 댓글 작성",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                            binding.commentContent.text.clear()
-                            val comment = response.body()!!
-                            val commentMutableList = comments.toMutableList()
-                            commentMutableList.add(comment)
-                            commentAdapter.updateComments(commentMutableList.toList())
-                            Log.d(TAG, "onResponse: ${response.body()}")
-                            binding.commentCount.text =
-                                (intent.getIntExtra("commentCount", 0) + 1).toString()
-                        } else {
-                            Log.d(TAG, "onResponse: ${response.body()}")
-                        }
-                    }
+            RetrofitClient.api.createComment(newComment).enqueue(object : Callback<Comment> {
+                override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@BoardDetailActivity, "새로운 댓글 작성", Toast.LENGTH_SHORT)
+                            .show()
+                        binding.commentContent.text.clear()
+                        val comment = response.body()!!
+                        val commentMutableList = comments.toMutableList()
+                        commentMutableList.add(comment)
+                        commentAdapter.updateComments(commentMutableList.toList())
+                        Log.d(TAG, "onResponse: ${response.body()}")
+                        binding.commentCount.text =
+                            (intent.getIntExtra("commentCount", 0) + 1).toString()
 
-                    override fun onFailure(call: Call<Comment>, t: Throwable) {
-                        Log.d(TAG, "onFailure: ${t.message}")
+                    } else {
+                        Log.d(TAG, "onResponse: ${response.body()}")
                     }
-                })
+                }
+
+                override fun onFailure(call: Call<Comment>, t: Throwable) {
+                    Log.d(TAG, "onFailure: ${t.message}")
+                }
+            })
         }
 
         binding.boardDeleteButton.setOnClickListener {
@@ -144,11 +138,16 @@ class BoardDetailActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<Board>, response: Response<Board>) {
                         if (response.isSuccessful) {
                             val resultIntent = Intent().apply {
-                                putExtra("deletedBoardId",boardId)
+                                putExtra("deletedBoardId", boardId)
                             }
                             setResult(Activity.RESULT_OK, resultIntent)
-                            Toast.makeText(this@BoardDetailActivity, "게시글이 성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@BoardDetailActivity,
+                                "게시글이 성공적으로 삭제되었습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             Log.d(TAG, "onResponse: ${response.body()}")
+                            finish()
                         } else {
                             Log.d(TAG, "onResponse: ${response.body()}")
                         }
@@ -161,6 +160,32 @@ class BoardDetailActivity : AppCompatActivity() {
 
         }
 
+
+        val activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                RetrofitClient.api.getBoardBYId(boardId).enqueue(object : Callback<Board> {
+                    override fun onResponse(
+                        call: Call<Board>,
+                        response: Response<Board>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
+                            inputBoardText(response.body()?.boardTitle, userNickName, boardTime, response.body()?.boardContent,
+                                heartCount, commentCount, response.body()?.boardTag)
+                        } else {
+                            Log.d(TAG, "onResponse: 응답 실패 ${response.body()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Board>, t: Throwable) {
+                        Log.d(TAG, "onFailure: 연결 실패 ${t.message}")
+                    }
+                })
+            }
+        }
+
         binding.boardModifyButton.setOnClickListener {
             val boardTitle = intent.getStringExtra("boardTitle")
             val boardContent = intent.getStringExtra("boardContent")
@@ -170,8 +195,6 @@ class BoardDetailActivity : AppCompatActivity() {
             val boardCommentCount = intent.getIntExtra("boardCommentCount", -1)
             val calculateTime = intent.getStringExtra("calculateTime")
 
-
-            Log.d(TAG, "onCreate: 수정버튼 클릭시  ${boardId}")
             val intent = Intent(this, UpdateActivity::class.java)
             intent.putExtra("boardId", boardId)
             intent.putExtra("boardTitle", boardTitle)
@@ -181,21 +204,34 @@ class BoardDetailActivity : AppCompatActivity() {
             intent.putExtra("boardLikeCount", boardLikeCount)
             intent.putExtra("boardCommentCount", boardCommentCount)
             intent.putExtra("calculateTime", calculateTime)
-            startActivity(intent)
-
-
-            activityResultLauncher = registerForActivityResult(
-                ActivityResultContracts.StartActivityForResult()
-            ) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    RetrofitClient.api.
-
-                }
-            }
+            activityResultLauncher.launch(intent)
 
         }
+    }
 
+    private fun inputBoardText(
+        boardTitle: String?,
+        userNickName: String?,
+        boardTime: String?,
+        boardContent: String?,
+        heartCount: Int?,
+        commentCount: Int?,
+        boardTag : String?
+    ) {
+        binding.boardTitle.text = boardTitle
+        binding.userNickName.text = userNickName
+        binding.boardTime.text = boardTime
+        binding.BoardContent.text = boardContent
+        binding.heartCount.text = heartCount.toString()
+        binding.commentCount.text = commentCount.toString()
 
+        if (boardTag == "COMMON") {
+            binding.boardTag.text = "일반고민 게시판"
+        } else if (boardTag == "MENTAL") {
+            binding.boardTag.text = "정신건강 게시판"
+        } else {
+            binding.boardTag.text = "응원 게시판"
+        }
 
     }
 
