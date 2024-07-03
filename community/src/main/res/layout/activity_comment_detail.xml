@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:text="글쓴이"
             android:textSize="20dp"
+            android:fontFamily="@font/dohyeon_regular"
             android:textStyle="bold"
             />
 
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:text="댓글을 적는 댓글댓글 댓글"
+        android:fontFamily="@font/dohyeon_regular"
         android:paddingTop="8dp"
         />
 
@@ -35,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="댓글을 적은 날짜"
+        android:fontFamily="@font/dohyeon_regular"
         android:textSize="12sp"
         android:paddingTop="10dp"
         android:paddingBottom="10sp"/>
@@ -61,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="댓글을 입력하세요"
+            android:fontFamily="@font/dohyeon_regular"
             android:inputType="text"
             android:layout_weight="3" />
 
@@ -68,6 +72,7 @@
             android:id="@+id/commentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/dohyeon_regular"
             android:text="입력" />
 
     </LinearLayout>

@@ -5,41 +5,30 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.BoardDetailActivity"
     android:orientation="vertical"
     android:padding="16dp"
-    >
-    
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    tools:context=".activity.BoardDetailActivity">
 
-        <TextView
-            android:id="@+id/boardTag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="게시판 이름"
-            android:textSize="16sp"
-            android:paddingTop="10sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            />
-        
-        <ImageView
-            android:paddingTop="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back_ios_24px"
-            />
-    </FrameLayout>
+    <TextView
+        android:id="@+id/boardTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dohyeon_regular"
+        android:gravity="center"
+        android:paddingTop="10sp"
+        android:text="게시판 이름"
+        android:textSize="32dp"
+        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/boardTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/dohyeon_regular"
         android:paddingTop="20sp"
         android:text="게시물 제목"
-        android:textSize="20sp"
+        android:textSize="30dp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -51,14 +40,16 @@
             android:id="@+id/userNickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="글쓴이"
+            android:fontFamily="@font/dohyeon_regular"
             android:paddingTop="10sp"
+            android:text="글쓴이"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/boardTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/dohyeon_regular"
             android:paddingLeft="10dp"
             android:text="작성 시간"
             android:textSize="14sp" />
@@ -70,10 +61,10 @@
         android:id="@+id/BoardContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/dohyeon_regular"
         android:paddingTop="20sp"
-        android:textSize="16sp"
         android:text="작성 내용 기이이이이일게"
-        />
+        android:textSize="16sp" />
 
 
     <LinearLayout
@@ -87,26 +78,27 @@
             android:id="@+id/heart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/favorite_24px" />
+            android:src="@drawable/red_heart" />
 
         <TextView
             android:id="@+id/heartCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="공감갯수"
+            android:fontFamily="@font/dohyeon_regular"
             android:paddingLeft="4dp"
-            />
+            android:text="공감갯수" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:src="@drawable/mode_comment_24px"/>
+            android:src="@drawable/mode_comment_24px" />
 
         <TextView
             android:id="@+id/commentCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/dohyeon_regular"
             android:paddingLeft="4dp"
             android:text="댓글갯수" />
     </LinearLayout>
@@ -114,22 +106,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="end"
+        android:orientation="horizontal"
         android:paddingBottom="8dp">
 
         <Button
             android:id="@+id/boardModifyButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="수정" />
+            android:layout_height="35dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/dohyeon_regular"
+            android:text="수정"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/boardDeleteButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/dohyeon_regular"
             android:text="삭제"
-            android:layout_marginLeft="6dp"/>
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
@@ -143,7 +142,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"/>
+            android:layout_weight="2" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -154,30 +153,19 @@
                 android:id="@+id/commentContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:hint="댓글을 입력하세요"
-                android:inputType="text"
-                android:layout_weight="3" />
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/commentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#81BF80"
                 android:text="입력" />
 
         </LinearLayout>
 
-
-
-
     </LinearLayout>
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>

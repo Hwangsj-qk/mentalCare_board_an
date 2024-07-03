@@ -42,7 +42,7 @@ class CommentDetailActivity : AppCompatActivity() {
         RetrofitClient.api.getChildrenByCommentId(commentId).enqueue(object : Callback<List<ChildrenComment>> {
             override fun onResponse(call: Call<List<ChildrenComment>>, response: Response<List<ChildrenComment>>) {
                 if(response.isSuccessful) {
-                    childrenComments = response.body() ?: emptyList()
+                    childrenComments = response.body() ?: emptyList<ChildrenComment>().toMutableList()
                     binding.recyclerView.adapter = childrenAdapter
                     childrenAdapter.updateChildren(childrenComments.toMutableList())
                     Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
@@ -74,7 +74,6 @@ class CommentDetailActivity : AppCompatActivity() {
                         childrenAdapter.updateChildren(childrenMutableList)
                         binding.commentContentWrite.text.clear()
                         Toast.makeText(this@CommentDetailActivity, "답글 작성 완료", Toast.LENGTH_SHORT).show()
-
 
                         Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
                     } else {

@@ -36,14 +36,9 @@ class CommentAdapter: RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
             binding.commentContent.text = comment.commentContent
             binding.commentTime.text = comment.commentTime
 
-            childrenAdapter = ChildrenAdapter()
-            binding.recyclerView.adapter = childrenAdapter
-
             val context = binding.root.context
 
-
-
-
+            binding.recyclerView.layoutManager = LinearLayoutManager(context)
             childrenAdapter = ChildrenAdapter()
 
             RetrofitClient.api.getChildrenByCommentId(comment.commentId).enqueue(object : Callback<List<ChildrenComment>>{
@@ -51,10 +46,8 @@ class CommentAdapter: RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
                     if(response.isSuccessful) {
                         childrenComments = response.body() ?: emptyList()
                         binding.recyclerView.adapter = childrenAdapter
-                        //childrenAdapter.updateChildren(childrenComments.toMutableList())
-
-                        Log.d(TAG, "onResponse: childrenComments ${childrenComments}")
-
+                        childrenAdapter.updateChildren(childrenComments.toMutableList()) // 이 문장 없으면 나타나지 않음
+                        Log.d(TAG, "onResponse: 응답 성공 ${childrenComments}")
                     } else {
                         Log.d(TAG, "onResponse: 응답 실패 ${response.body()}")
                     }

@@ -13,7 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Community"
-        android:textSize="24sp"
+        android:paddingTop="30sp"
+        android:textColor="#4C4F4C"
+        android:fontFamily="@font/dohyeon_regular"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:paddingBottom="10dp"/>
 
@@ -39,10 +42,12 @@
     <Button
         android:id="@+id/writeButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:background="#81BF80"
+        android:textColor="@color/white"
         android:text="글쓰기"
+        android:fontFamily="@font/dohyeon_regular"
         android:layout_gravity="end" />
-
 
 
 </LinearLayout>

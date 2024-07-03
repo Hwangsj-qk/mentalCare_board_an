@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="제목"
+        android:fontFamily="@font/dohyeon_regular"
         android:textSize="20sp"
         android:textStyle="bold"
         android:paddingLeft="8dp"
@@ -19,7 +20,8 @@
         android:id="@+id/boardContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="글 내용 -> 나중에 너무 긴 텍스트 처리하기"
+        android:fontFamily="@font/dohyeon_regular"
+        android:text="게시글 내용을 보여주는 공간입니다."
         android:textSize="14sp"
         android:paddingLeft="8dp"
         android:paddingTop="4dp"/>
@@ -34,13 +36,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/favorite_24px"/>
+            android:src="@drawable/heart"/>
 
         <TextView
             android:id="@+id/heartCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="공감갯수"
+            android:fontFamily="@font/dohyeon_regular"
             android:paddingLeft="4dp"
             />
 
@@ -55,12 +58,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="4dp"
+            android:fontFamily="@font/dohyeon_regular"
             android:text="댓글갯수" />
 
         <TextView
             android:id="@+id/boardTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/dohyeon_regular"
             android:text="시간"
             android:paddingLeft="6dp"/>
 
@@ -69,16 +74,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
+            android:fontFamily="@font/dohyeon_regular"
             android:text="글쓴이"
             />
         
     </LinearLayout>
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="5dp"
-        android:background="@drawable/line"
-        android:paddingTop="4dp" />
-
 
 </LinearLayout>

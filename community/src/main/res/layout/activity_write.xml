@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="글쓰기"
+            android:fontFamily="@font/dohyeon_regular"
             android:layout_weight="1.5"
             android:gravity="center"
             android:textSize="20dp"
@@ -29,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="완료"
+            android:fontFamily="@font/dohyeon_regular"
             android:layout_gravity="right" />
 
     </FrameLayout>
@@ -39,6 +41,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:hint="제목"
+        android:fontFamily="@font/dohyeon_regular"
         android:inputType="text" />
 
     <RadioGroup
@@ -52,20 +55,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="일반고민" />
+            android:text="일반고민"
+            android:fontFamily="@font/dohyeon_regular"/>
 
         <RadioButton
             android:id="@+id/mentalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="정신건강" />
+            android:text="정신건강"
+            android:fontFamily="@font/dohyeon_regular"/>
 
         <RadioButton
             android:id="@+id/cheeringButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/dohyeon_regular"
             android:text="응원" />
 
     </RadioGroup>
@@ -75,6 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="350sp"
         android:hint="내용을 입력하세요"
+        android:fontFamily="@font/dohyeon_regular"
         android:background= "@null"
         android:gravity="top"
         />
@@ -84,6 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="게시판 안내사항"
+        android:fontFamily="@font/dohyeon_regular"
         android:textStyle="bold"
         android:textSize="16dp" />
 
@@ -91,6 +99,7 @@
         android:id="@+id/guideContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/dohyeon_regular"
         android:text="건강한 게시판 형성을 위해 해당 게시판에서는 커뮤니티 이용규칙을 제정하여 운영하고 있습니다. \n
 위반 시 게시물이 삭제되고 서비스이용일 일정 기간 제한될 수 있습니다. \n  \n 1. 정치 및 사회 관련 행위 금지 \n 2. 홍보 및 판매 행위 금지  \n 3. 타인을 비방하는 행위 금지"
         />

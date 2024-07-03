@@ -21,8 +21,8 @@ import retrofit2.Response
 import java.util.Collections.addAll
 
 private const val TAG = "ChildrenAdapter"
-class ChildrenAdapter : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
-    var childrenComments: MutableList<ChildrenComment> = mutableListOf<ChildrenComment>()
+class ChildrenAdapter  : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
+     private var childrenComments: MutableList<ChildrenComment> = mutableListOf<ChildrenComment>()
 
     inner class ItemViewHolder(val binding: ChildrenItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(children: ChildrenComment) {
@@ -40,11 +40,6 @@ class ChildrenAdapter : RecyclerView.Adapter<ChildrenAdapter.ItemViewHolder>() {
                             removeByChildrenId(children.childrenId)
                             Toast.makeText(it.context, "대댓글 삭제 성공", Toast.LENGTH_SHORT).show()
                             Log.d(TAG, "onResponse: 응답 성공 ${response.body()}")
-
-                            val activity = binding.root.context as BoardDetailActivity
-                            val count = activity.binding.commentCount.text.toString().toInt()
-                            activity.binding.commentCount.text = (count - 1).toString()
-
                         } else {
                             Log.d(TAG, "onResponse: 응답 실패 ${response.body()}")
                         }
