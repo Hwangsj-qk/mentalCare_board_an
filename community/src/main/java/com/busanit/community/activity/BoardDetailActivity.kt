@@ -2,9 +2,11 @@ package com.busanit.community.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -75,6 +77,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
         })
+
 
         // 하트 클릭시 공감 버튼 활성화
         binding.heart.setOnClickListener {
@@ -200,6 +203,7 @@ class BoardDetailActivity : AppCompatActivity() {
 
     }
 
+    // 데이터 입력을 위한 메소드
     private fun inputBoardText(
         boardTitle: String?,
         userNickName: String?,

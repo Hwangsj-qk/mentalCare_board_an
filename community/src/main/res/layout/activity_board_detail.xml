@@ -74,11 +74,11 @@
         android:paddingTop="20dp">
 
 
-        <ImageView
+        <Button
             android:id="@+id/heart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/red_heart" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/select_heart" />
 
         <TextView
             android:id="@+id/heartCount"

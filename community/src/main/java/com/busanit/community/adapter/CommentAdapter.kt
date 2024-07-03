@@ -121,8 +121,15 @@ class CommentAdapter: RecyclerView.Adapter<CommentAdapter.ItemViewHolder>() {
     fun removeByCommentId(commentId: Long) {
         val position = comments.indexOfFirst { it.commentId == commentId }
         if (position != -1) {
-            comments.removeAt(position)
-            notifyItemRemoved(position)
+            if(childrenComments.isNotEmpty()){
+                Log.d(TAG, "removeByCommentId: childrenComments ${childrenComments}")
+                comments[position].commentContent = "삭제된 댓글입니다"
+                notifyItemChanged(position)
+            } else {
+                comments.removeAt(position)
+                notifyItemRemoved(position)
+            }
+
         }
     }
 }
