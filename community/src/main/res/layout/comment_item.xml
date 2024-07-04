@@ -32,7 +32,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="270dp"
+            android:layout_marginLeft="290dp"
             android:layout_alignParentTop="true"
             />
 
@@ -83,15 +83,9 @@
             android:layout_height="34dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="244dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="74dp"
-            android:background="@drawable/rectangle_3"
-
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
+            android:background="@drawable/button"
             android:fontFamily="@font/dohyeon_regular"
+            android:textColor="@color/white"
             android:text="삭제" />
 
     </LinearLayout>
