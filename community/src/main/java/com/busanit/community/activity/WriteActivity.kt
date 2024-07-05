@@ -39,7 +39,7 @@ class WriteActivity : AppCompatActivity() {
                     R.id.cheeringButton -> tag = "CHEERING"
                 }
 
-                val newBoard = NewBoard(tag, title, content, "희동이")
+                val newBoard = NewBoard(tag, title, content, "ex1")
                 boards = mutableListOf()
 
                 RetrofitClient.api.createBoard(newBoard).enqueue(object : Callback<Board> {

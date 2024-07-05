@@ -106,7 +106,7 @@ class BoardDetailActivity : AppCompatActivity() {
         binding.commentButton.setOnClickListener {
             // 댓글 입력을 위한 데이터 받기 + 새로운 객체 생성
             val commentContent = binding.commentContent.text.toString()
-            val newComment = NewComment(commentContent, "마이콜", boardId)
+            val newComment = NewComment(commentContent, "ex2", boardId)
 
             // 댓글 추가를 위한 api
             RetrofitClient.api.createComment(newComment).enqueue(object : Callback<Comment> {

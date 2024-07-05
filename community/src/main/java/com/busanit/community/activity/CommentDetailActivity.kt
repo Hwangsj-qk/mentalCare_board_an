@@ -60,7 +60,7 @@ class CommentDetailActivity : AppCompatActivity() {
 
         binding.commentButton.setOnClickListener {
             val childrenContent = binding.commentContentWrite.text.toString()
-            val newChildren = NewChildren(childrenContent, "희동이", commentId)
+            val newChildren = NewChildren(childrenContent, "ex3", commentId)
 
             RetrofitClient.api.createChildren(newChildren).enqueue(object : Callback<ChildrenComment>{
                 override fun onResponse(

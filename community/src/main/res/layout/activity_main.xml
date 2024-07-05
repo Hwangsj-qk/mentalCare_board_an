@@ -8,64 +8,41 @@
     tools:context=".activity.MainActivity"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    android:padding="8dp">
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clipToOutline="true"
-    android:background="#FFFFFF">
-
-    <ImageView
-        android:id="@+id/right_side"
-        android:layout_width="80dp"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-       android:layout_marginRight="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17.33dp"
-        android:src="@drawable/right_side"
-        />
-
-    <ImageView
-        android:id="@+id/time"
-        android:layout_width="60dp"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17dp"
-        android:src="@drawable/time"
-        />
-
-</RelativeLayout>
+    android:paddingTop ="8dp"
+    android:paddingBottom="10dp">
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorHeight="1.3dp"
+        app:tabIndicatorColor="#C0C0C0"
+        app:tabSelectedTextAppearance="@style/tab_bold"
+        app:tabTextAppearance="@style/tab"
+        android:paddingTop="10dp">
 
-        </com.google.android.material.tabs.TabLayout>
-
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6"/>
+    </com.google.android.material.tabs.TabLayout>
 
 
-        <Button
-            android:id="@+id/writeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/long_button"
-            android:layout_marginBottom="10sp"
-            android:textSize="20sp"
-            android:text="글쓰기"
-            android:textColor="@color/white"
-            android:fontFamily="@font/dohyeon_regular"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="6"/>
+
+
+    <Button
+        android:id="@+id/writeButton"
+        android:layout_width="380dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/long_button"
+        android:layout_marginBottom="10sp"
+        android:textSize="20sp"
+        android:text="글쓰기"
+        android:textColor="@color/white"
+        android:fontFamily="@font/dohyeon_regular"/>
 
 
 

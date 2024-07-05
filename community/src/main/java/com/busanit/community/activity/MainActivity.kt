@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.busanit.community.R
 import com.busanit.community.databinding.ActivityMainBinding
 import com.busanit.community.fragment.CheeringFragment
 import com.busanit.community.fragment.CommonFragment
 import com.busanit.community.fragment.MentalFragment
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         binding.writeButton.setOnClickListener { startActivity(intent) }
 
 
-
         // 사용할 프래그먼트
         fragmentList.add(CommonFragment())
         fragmentList.add(MentalFragment())
@@ -35,17 +36,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.pager2.adapter = TabAdapter(this, fragmentList)
 
+
         // 탭 이름 설정
         val tabName = arrayOf("일반 고민", "정신건강", "응원")
 
         binding.run {
             TabLayoutMediator(tabLayout, pager2) { tab, position ->
-                tab.text = tabName[position]        // 탭 이름 설정
+                tab.text = tabName[position]
             }.attach()
         }
 
 
     }
+}
+
+
 
     class TabAdapter(fragmentActivity: FragmentActivity, val fragmentList: MutableList<Fragment>) : FragmentStateAdapter(fragmentActivity) {
         override fun getItemCount(): Int = 3
@@ -55,4 +60,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-}

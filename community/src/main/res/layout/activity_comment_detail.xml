@@ -10,37 +10,9 @@ android:orientation="vertical"
 android:background="#FFFFFF"
 android:paddingTop="8dp"
 android:paddingLeft="15dp"
-android:paddingRight="15dp">
+android:paddingRight="15dp"
+    android:paddingBottom="10dp">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clipToOutline="true"
-    android:background="#FFFFFF">
-
-    <ImageView
-        android:id="@+id/right_side"
-        android:layout_width="80dp"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17.33dp"
-        android:src="@drawable/right_side"
-        />
-
-    <ImageView
-        android:id="@+id/time"
-        android:layout_width="60dp"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17dp"
-        android:src="@drawable/time"
-        />
-
-</RelativeLayout>
 
     <TextView
         android:id="@+id/commentUser"
@@ -112,6 +84,7 @@ android:paddingRight="15dp">
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding = "10dp"
         android:layout_weight="3"/>
 
     <LinearLayout
@@ -123,10 +96,12 @@ android:paddingRight="15dp">
             android:id="@+id/commentContentWrite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="댓글을 입력하세요"
+            android:layout_weight="3"
+            android:textColorHint="#DADADA"
+            android:hint="답글을 입력하세요"
+            android:textColor="#4C4F4C"
             android:fontFamily="@font/dohyeon_regular"
-            android:inputType="text"
-            android:layout_weight="3" />
+            android:inputType="text" />
 
         <Button
             android:id="@+id/commentButton"

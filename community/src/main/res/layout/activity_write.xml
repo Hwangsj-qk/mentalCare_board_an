@@ -12,35 +12,6 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToOutline="true"
-            android:background="#FFFFFF">
-
-            <ImageView
-                android:id="@+id/right_side"
-                android:layout_width="80dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="17dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="17.33dp"
-                android:src="@drawable/right_side"
-                />
-
-            <ImageView
-                android:id="@+id/time"
-                android:layout_width="60dp"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="17dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="17dp"
-                android:src="@drawable/time"
-                />
-
-        </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -71,7 +42,7 @@
             android:layout_width="71dp"
             android:layout_height="34dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="310dp"
+            android:layout_marginLeft="290dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="15dp"
             android:background="@drawable/button"
@@ -83,12 +54,14 @@
 
     <EditText
         android:id="@+id/editTitle"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
+        android:textColorHint="#DADADA"
         android:hint="제목을 입력하세요"
         android:textSize="20sp"
-        android:textColor="#DADADA"
+        android:textColor="#4C4F4C"
         android:fontFamily="@font/dohyeon_regular"
         android:inputType="text" />
 
@@ -96,7 +69,8 @@
         android:id="@+id/tagGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="8dp">
 
         <RadioButton
             android:paddingTop="5dp"
@@ -133,21 +107,22 @@
         android:layout_width="match_parent"
         android:layout_height="330sp"
         android:hint="내용을 입력하세요"
-        android:textColor="#DADADA"
+        android:textColorHint="#DADADA"
+        android:textColor="#4C4F4C"
         android:textSize="20sp"
         android:fontFamily="@font/dohyeon_regular"
         android:background= "@null"
         android:gravity="top"
-        android:paddingTop="10dp"
+        android:paddingTop="13dp"
+        android:paddingLeft="8dp"
         />
 
     <TextView
         android:layout_width="124dp"
-        android:layout_height="25dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="30dp"
         android:text="게시판 안내사항"
         android:textSize="18sp"
+        android:paddingBottom="4dp"
         android:fontFamily="@font/inter_semibold"
         android:textAppearance="@style/guide"
         android:lineSpacingExtra="3sp"
